@@ -88,8 +88,20 @@
             ReplayModel *replayModel = obj;
                 //分割数据.收集评论lable的高度和文本
             [_replayLabelHeights addObject:[replayModel.Content componentsSeparatedByString:@"#"].firstObject];
-            [_replayLabelTexts addObject:[replayModel.Content componentsSeparatedByString:@"#"].lastObject];
             
+            NSString *textStr = @"";
+            int i = 0;
+            
+            for (NSString *text in [replayModel.Content componentsSeparatedByString:@"#"]) {
+                i ++;
+
+                if (i == 1) {
+                    continue;
+                }
+                
+               textStr = [textStr stringByAppendingString:text];
+            }
+            [_replayLabelTexts addObject:textStr];
         }];
         
             //动态添加回复 label
