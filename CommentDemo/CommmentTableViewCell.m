@@ -57,6 +57,7 @@
     
     _contentLabel  = [[UILabel alloc] initWithFrame:CGRectMake(83, 51, SCREENWIDTH - 83 - 20, 0)];
     [self.contentView addSubview:_contentLabel];
+    _contentLabel.font = [UIFont systemFontOfSize:16];
 
 }
 
@@ -103,6 +104,17 @@
             }
             [_replayLabelTexts addObject:textStr];
         }];
+        
+        //判断移除动态添加的 replylabel, 防止重用出错
+        for (UIView *view in self.subviews) {
+            if ([view isKindOfClass:NSClassFromString(@"UITableViewCellContentView")]) {
+                for (UIView *subView in view.subviews) {
+                    if ([subView isKindOfClass:[UILabel class]] && (subView != _nameLable && subView != _timeLabel && subView != _contentLabel)) {
+                        [subView removeFromSuperview];
+                    }
+                }
+            }
+        }
         
             //动态添加回复 label
         for (int i = 0; i < _replayLabelHeights.count; i ++) {
